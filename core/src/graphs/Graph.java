@@ -2,6 +2,11 @@ package graphs;
 
 import java.util.*;
 
+/**
+ * Implementation of a graph of integers.
+ *
+ * @author Ryan Strauss
+ */
 public class Graph {
 
     private Map<Integer, Set<Edge>> incoming, outgoing;
