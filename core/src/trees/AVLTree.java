@@ -1,19 +1,24 @@
 package trees;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Balanced binary search tree (AVL).
+ * Self-balancing binary search tree (AVL).
  *
  * @author Ryan Strauss
  */
-public class AVLTree {
+public class AVLTree implements Tree {
 
     private Node root;
+    private int size;
 
     /**
      * Constructs an empty binary search tree.
      */
     public AVLTree() {
         root = null;
+        size = 0;
     }
 
     /**
@@ -133,15 +138,20 @@ public class AVLTree {
      * @param value The element to be inserted in the tree.
      * @return True if the element was inserted; false if the value was already present.
      */
+    @Override
     public boolean add(int value) {
         Node temp = new Node(value);
-
         if (root == null) {
             root = temp;
             updateLevel(root);
+            size++;
             return true;
         } else {
-            return add(temp, root);
+            if (add(temp, root)) {
+                size++;
+                return true;
+            }
+            return false;
         }
     }
 
@@ -189,6 +199,7 @@ public class AVLTree {
      * @param value The value being checked for containment.
      * @return True if the value is present; false otherwise.
      */
+    @Override
     public boolean contains(int value) {
         return contains(value, root);
     }
@@ -283,6 +294,7 @@ public class AVLTree {
      * @param value Value to be removed from the tree.
      * @return True if the value was removed; false if the value was not found.
      */
+    @Override
     public boolean remove(int value) {
         return remove(value, root, null);
     }
@@ -341,128 +353,108 @@ public class AVLTree {
     }
 
     /**
-     * Returns true if and only if the parent links of all nodes are correct.
+     * Performs a pre-order traversal of the tree.
      *
-     * @return True iff the parent links of all nodes are correct.
+     * @return an ArrayList containing the elements of the tree in order of a pre-order traversal
      */
-    private boolean testParentLinks() {
-        if (root == null) {
-            return true;
+    @Override
+    public List<Integer> preOrder() {
+        List<Integer> list = new ArrayList<>(size);
+        if (!isEmpty()) {
+            preOrder(list, root);
         }
-        if (root.parent != null) {
-            return false;
-        }
-        return testParentLinks(root);
+        return list;
     }
 
-
     /**
-     * Helper method for the testParentLinks() function.
-     * Returns true if and only if the parent links of all nodes in the tree rooted at the specified node
-     * are correct.
+     * Recursive helper function for performing pre-order traversal.
      *
-     * @param currentRoot Root of the tree.
-     * @return True iff the parent links of all nodes in the tree rooted at currentRoot are correct.
+     * @param list   the list that elements are being added to
+     * @param parent the next parent node
      */
-    private boolean testParentLinks(Node currentRoot) {
-        if (currentRoot == null) {
-            return true;
+    private void preOrder(List<Integer> list, Node parent) {
+        if (parent != null) {
+            list.add(parent.value);
+            preOrder(list, parent.left);
+            preOrder(list, parent.right);
         }
-        if (currentRoot.left != null) {
-            if (currentRoot.left.parent != currentRoot || !testParentLinks(currentRoot.left)) {
-                return false;
-            }
-        }
-        if (currentRoot.right != null) {
-            return currentRoot.right.parent == currentRoot && testParentLinks(currentRoot.right);
-        }
-        return true;
     }
 
 
     /**
-     * Draws the tree starting at the root
-     */
-    public void drawTree() {
-        drawTree(root, "");
-    }
-
-    /**
-     * Draws the tree following a pre-order traversal starting at
-     * currentRoot
+     * Performs an in-order traversal of the tree.
      *
-     * @param currentRoot - The root of the tree to draw
-     * @param space       - The number of spaces to print before
-     *                    printing the value of the node. All nodes on the same level
-     *                    in the tree will be printed with the same indentation
+     * @return an ArrayList containing the elements of the tree in order of a in-order traversal
      */
-    private void drawTree(Node currentRoot, String space) {
-        if (currentRoot == null) {
-            return;
+    @Override
+    public List<Integer> inOrder() {
+        List<Integer> list = new ArrayList<>(size);
+        if (!isEmpty()) {
+            inOrder(list, root);
         }
-        System.out.println(space + currentRoot);
-        drawTree(currentRoot.left, space + "  |");
-        drawTree(currentRoot.right, space + "  |");
+        return list;
     }
 
     /**
-     * Prints elements level-by-level.
-     */
-    private void printTree() {
-        if (root != null) {
-            printInOrder(root, 0);
-        }
-    }
-
-    /**
-     * Prints a subtree in-order with indentation.
+     * Recursive helper function for performing in-order traversal.
      *
-     * @param currentRoot The subtree being printed.
-     * @param indentLevel The level of indentation in which this subtree should be printed.
+     * @param list   the list that elements are being added to
+     * @param parent the next parent node
      */
-    private void printInOrder(Node currentRoot, int indentLevel) {
-        if (currentRoot == null) {
-            return;
+    private void inOrder(List<Integer> list, Node parent) {
+        if (parent != null) {
+            inOrder(list, parent.left);
+            list.add(parent.value);
+            inOrder(list, parent.right);
         }
-
-        printInOrder(currentRoot.right, indentLevel + 1);
-        for (int i = 0; i < indentLevel; i++) {
-            System.out.print("   ");
-        }
-        System.out.println(currentRoot);
-        printInOrder(currentRoot.left, indentLevel + 1);
-
     }
 
     /**
-     * Self balancing binary tree node.
+     * Performs a post-order traversal of the tree.
      *
-     * @author Ryan Strauss
+     * @return an ArrayList containing the elements of the tree in order of a post-order traversal
      */
-    private class Node {
-        int value, level;
-        Node left, right, parent;
-
-        /**
-         * Parameterized constructor for the <code>Node</code> class which sets the value of the node
-         * equal to <code>value</code>.
-         *
-         * @param value the value of the new node
-         */
-        Node(int value) {
-            this.value = value;
-            left = null;
-            right = null;
-            parent = null;
-            level = 0;
+    @Override
+    public List<Integer> postOrder() {
+        List<Integer> list = new ArrayList<>(size);
+        if (!isEmpty()) {
+            postOrder(list, root);
         }
+        return list;
+    }
 
-        /**
-         * Returns the <code>Node</code> as a <code>String</code> as "[value, level]".
-         */
-        public String toString() {
-            return "[" + value + ", " + level + "]";
+    /**
+     * Recursive helper function for performing post-order traversal.
+     *
+     * @param list   the list that elements are being added to
+     * @param parent the next parent node
+     */
+    private void postOrder(List<Integer> list, Node parent) {
+        if (parent != null) {
+            postOrder(list, parent.left);
+            postOrder(list, parent.right);
+            list.add(parent.value);
         }
+    }
+
+    /**
+     * Returns the number of elements in the tree.
+     *
+     * @return the size of the tree
+     */
+    @Override
+    public int size() {
+        return size;
+    }
+
+    /**
+     * Returns whether or not the tree is empty.
+     *
+     * @return true iff the tree contains no elements
+     */
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
     }
 
 }
