@@ -10,24 +10,24 @@ public class BinarySearch {
      *
      * @param target the item to search for
      * @param nums   the array to be searched
-     * @return <code>true</code> if and only if <code>target</code> is in <code>nums</code>, otherwise <code>false</code>
+     * @return the index of the target in nums, or -1 if target is not found
      */
-    public static boolean search(int target, int[] nums) {
+    public static int search(int target, int[] nums) {
         return binarySearch(target, nums, 0, nums.length - 1);
     }
 
     /*
-    Recursive helper function that performs a binary search.
+     * Recursive helper function that performs a binary search.
      */
-    private static boolean binarySearch(int target, int[] nums, int start, int end) {
+    private static int binarySearch(int target, int[] nums, int start, int end) {
         if (start > end)
-            return false;
+            return -1;
         int middle = (start + end) / 2;
         if (target < nums[middle])
             return binarySearch(target, nums, start, middle - 1);
         if (target > nums[middle])
             return binarySearch(target, nums, middle + 1, end);
-        return true;
+        return middle;
     }
 
 }

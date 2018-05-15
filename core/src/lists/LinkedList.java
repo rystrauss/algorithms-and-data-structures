@@ -5,7 +5,7 @@ package lists;
  *
  * @author Ryan Staruss
  */
-public class LinkedList {
+public class LinkedList implements List {
 
     private class Node {
         private int value;
@@ -78,6 +78,65 @@ public class LinkedList {
     }
 
     /**
+     * Gets the element at the specified index.
+     *
+     * @param index the index of the desired element
+     * @return the element at index
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
+    @Override
+    public int get(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException();
+        Node pos = head;
+        for (int i = 0; i < index; i++) {
+            pos = pos.next;
+        }
+        return pos.value;
+    }
+
+    /**
+     * Removes the element at the specified index, and returns that element.
+     *
+     * @param index the index of the element to remove
+     * @return the removed element
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
+    @Override
+    public int remove(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException();
+        Node pos = head;
+        Node temp;
+        for (int i = 0; i < index - 1; i++) {
+            pos = pos.next;
+        }
+        temp = pos.next;
+        pos.next = pos.next.next;
+        return temp.value;
+    }
+
+    /**
+     * Gets the size of the list.
+     *
+     * @return the size of the list
+     */
+    @Override
+    public int size() {
+        return size;
+    }
+
+    /**
+     * Returns boolean value of whether or not the list is empty.
+     *
+     * @return true iff the list has at least one element.
+     */
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    /**
      * Adds the given integer to a sorted list such that ascending order is maintained.
      *
      * @param n the number to be added
@@ -102,6 +161,7 @@ public class LinkedList {
     /**
      * @return A string representation of this <code>LinkedList</code>.
      */
+    @Override
     public String toString() {
         if (head == null)
             return "[]";
