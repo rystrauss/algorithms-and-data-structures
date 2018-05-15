@@ -1,14 +1,14 @@
 package sort;
 
 /**
- * Class containing implementation of insertion sort.
+ * Class containing implementation of merge sort.
  *
  * @author Ryan Strauss
  */
 public class MergeSort {
 
     /**
-     * Performs a merge sort on the given array of integers.
+     * Performs an inplace merge sort on the given array of integers.
      *
      * @param nums the array to be sorted
      */

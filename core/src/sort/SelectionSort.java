@@ -1,9 +1,14 @@
 package sort;
 
+/**
+ * Class containing implementation of selection sort.
+ *
+ * @author Ryan Strauss
+ */
 public class SelectionSort {
 
     /**
-     * Performs a selection sort on an array of integers.
+     * Performs an inplace selection sort on an array of integers.
      *
      * @param nums array to be sorted
      */

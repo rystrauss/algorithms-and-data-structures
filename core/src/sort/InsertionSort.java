@@ -8,7 +8,7 @@ package sort;
 public class InsertionSort {
 
     /**
-     * Performs an insertion sort on an array of integers.
+     * Performs an inplace insertion sort on an array of integers.
      *
      * @param nums array to be sorted
      */
