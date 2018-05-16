@@ -35,24 +35,6 @@ public class Graph {
     }
 
     /**
-     * Adds an edge between the given vertices with a weight of 1.
-     *
-     * @param a
-     * @param b
-     * @return true iff the edge was successfully added to the graph and false otherwise
-     */
-    public boolean addEdge(int a, int b) {
-        if (!outgoing.containsKey(a))
-            return false;
-        if (hasEdge(a, b) || hasEdge(b, a))
-            return false;
-        outgoing.get(a).add(new Edge(b, 1.));
-        incoming.get(b).add(new Edge(a, 1.));
-        edgeCount++;
-        return true;
-    }
-
-    /**
      * Adds an edge between the given vertices with the given weight.
      *
      * @param a
@@ -66,6 +48,8 @@ public class Graph {
             return false;
         outgoing.get(a).add(new Edge(b, weight));
         incoming.get(b).add(new Edge(a, weight));
+        outgoing.get(b).add(new Edge(a, weight));
+        incoming.get(a).add(new Edge(b, weight));
         edgeCount++;
         return true;
     }
@@ -175,6 +159,38 @@ public class Graph {
     }
 
     /**
+     * Finds the shortest path from the source vertex to all other vertices.
+     * <p>
+     * Implements Dijkstra's algorithm using a priority queue.
+     *
+     * @param source the vertix from which to calculate distances
+     * @return a map where keys are vertices and values are distances
+     */
+    public Map<Integer, Double> shortestPath(int source) {
+        if (!incoming.keySet().contains(source))
+            return null;
+        Map<Integer, Double> dist = new HashMap<>();
+        PriorityQueue<LabeledVertex> Q = new PriorityQueue<>();
+        for (int i : incoming.keySet()) {
+            if (i == source)
+                dist.put(i, 0.0);
+            else
+                dist.put(i, Double.MAX_VALUE);
+        }
+        Q.add(new LabeledVertex(source, dist.get(source)));
+        while (!Q.isEmpty()) {
+            LabeledVertex u = Q.poll();
+            for (Edge e : outgoing.get(u.id)) {
+                if (dist.get(e.endpoint) > (dist.get(u.id) + e.weight)) {
+                    dist.put(e.endpoint, dist.get(u.id) + e.weight);
+                    Q.add(new LabeledVertex(e.endpoint, dist.get(u.id) + e.weight));
+                }
+            }
+        }
+        return dist;
+    }
+
+    /**
      * Returns the number of vertices in the graph.
      *
      * @return the number of vertices
@@ -201,7 +217,23 @@ public class Graph {
         return String.format("Graph(verticies=%d, edges=%d)", vertexCount, edgeCount);
     }
 
-    private class Edge implements Comparable {
+    private class LabeledVertex implements Comparable<LabeledVertex> {
+
+        int id;
+        double distance;
+
+        private LabeledVertex(int id, double distance) {
+            this.id = id;
+            this.distance = distance;
+        }
+
+        @Override
+        public int compareTo(LabeledVertex o) {
+            return (int) (this.distance - o.distance);
+        }
+    }
+
+    private class Edge implements Comparable<Edge> {
 
         private int endpoint;
         private double weight;
@@ -212,8 +244,7 @@ public class Graph {
         }
 
         @Override
-        public int compareTo(Object o) {
-            Edge e = (Edge) o;
+        public int compareTo(Edge e) {
             if (weight == e.weight)
                 return 0;
             return (weight < e.weight) ? -1 : 1;
