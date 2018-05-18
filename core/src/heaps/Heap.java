@@ -1,5 +1,10 @@
 package heaps;
 
+/**
+ * Interface for a heap data structure.
+ *
+ * @author Ryan Strauss
+ */
 public interface Heap {
 
     /**

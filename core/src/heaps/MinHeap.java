@@ -2,6 +2,11 @@ package heaps;
 
 import java.util.ArrayList;
 
+/**
+ * Implementation of a min-heap.
+ *
+ * @author Ryan Strauss
+ */
 public class MinHeap implements Heap {
 
     private ArrayList<Integer> nodes;

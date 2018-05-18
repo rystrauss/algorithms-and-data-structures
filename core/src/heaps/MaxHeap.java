@@ -2,6 +2,11 @@ package heaps;
 
 import java.util.ArrayList;
 
+/**
+ * Implementation of a max-heap.
+ *
+ * @author Ryan Strauss
+ */
 public class MaxHeap implements Heap {
 
     private ArrayList<Integer> nodes;
