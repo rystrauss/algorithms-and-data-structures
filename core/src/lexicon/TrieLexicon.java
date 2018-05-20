@@ -65,7 +65,7 @@ public class TrieLexicon implements Lexicon {
             pos = child;
         }
         if (!pos.isWord) {
-            pos.isWord = true; // walked down path, mark this as a word
+            pos.isWord = true;
             size++;
             return true;
         }
