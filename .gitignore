@@ -128,3 +128,4 @@ hs_err_pid*
 *.iml
 random/
 core/src/Tester.java
+*.txt
