@@ -96,6 +96,7 @@ public class HeapSort {
      *
      * @param pos1 First position.
      * @param pos2 Second position (no order implied).
+     * @param nums the array being operated on
      */
     private static void swap(int pos1, int pos2, int[] nums) {
         int temporary = nums[pos1];
