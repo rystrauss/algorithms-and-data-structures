@@ -25,8 +25,8 @@ public class CountingSort {
 
         int[] temp = Arrays.copyOf(nums, nums.length);
 
-        for (int i : temp) {
-            nums[count[key(i, d)]-- - 1] = i;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            nums[--count[key(temp[i], d)]] = temp[i];
         }
 
     }
