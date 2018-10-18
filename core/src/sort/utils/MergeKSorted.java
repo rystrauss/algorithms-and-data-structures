@@ -38,7 +38,8 @@ public class MergeKSorted {
         Heap<Node> pq = new MinHeap<>();
 
         for (int i = 0; i < k; i++) {
-            pq.push(new Node(lists[i][0], i));
+            if (lists[i].length > 0)
+                pq.push(new Node(lists[i][0], i));
             n += lists[i].length;
         }
 
