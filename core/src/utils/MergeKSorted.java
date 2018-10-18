@@ -1,4 +1,4 @@
-package sort.utils;
+package utils;
 
 import heaps.Heap;
 import heaps.MinHeap;
