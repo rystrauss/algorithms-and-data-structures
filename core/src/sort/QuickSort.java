@@ -42,8 +42,7 @@ public class QuickSort {
      * @return the partition point
      */
     private static int partition(int[] nums, int low, int high) {
-        int mid = low + (high - low) / 2;
-        int pivot = median(nums[low], nums[mid], nums[high]);
+        int pivot = nums[(int) (Math.random() * (high - low)) + low];
         while (true) {
             while (nums[low] < pivot)
                 low++;
@@ -68,34 +67,6 @@ public class QuickSort {
         int temporary = nums[pos1];
         nums[pos1] = nums[pos2];
         nums[pos2] = temporary;
-    }
-
-    /**
-     * Finds the median of the three inputs.
-     *
-     * @param a any number
-     * @param b any number
-     * @param c any number
-     * @return the median of the three parameters
-     */
-    private static int median(int a, int b, int c) {
-        if (a > b) {
-            if (b > c) {
-                return b;
-            } else if (a > c) {
-                return c;
-            } else {
-                return a;
-            }
-        } else {
-            if (a > c) {
-                return a;
-            } else if (b > c) {
-                return c;
-            } else {
-                return b;
-            }
-        }
     }
 
 }
