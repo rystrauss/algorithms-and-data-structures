@@ -1,5 +1,7 @@
 package sort;
 
+import java.util.Arrays;
+
 /**
  * Class containing implementation of counting sort.
  *
@@ -8,27 +10,33 @@ package sort;
 public class CountingSort {
 
     /**
-     * Performs an inplace counting sort on an array of integers between 0 and 9.
+     * Performs a counting sort on an array of integers on digit d.
      *
      * @param nums array to be sorted
+     * @param d The digit on which to sort the elements. A value of 0 corresponds to the rightmost digit.
      */
-    public static void sort(int[] nums) {
+    public static void sort(int[] nums, int d) {
         int[] count = new int[10];
 
-        for (int i : nums) count[i]++;
-        for (int i = 1; i < 10; i++) count[i] += count[i - 1];
+        for (int i : nums)
+            count[key(i, d)]++;
+        for (int i = 1; i < 10; i++)
+            count[i] += count[i - 1];
 
-        int index = nums.length - 1;
+        int[] temp = Arrays.copyOf(nums, nums.length);
 
-        for (int i = 9; i > 0; i--) {
-            while (count[i] - count[i - 1] > 0) {
-                nums[index--] = i;
-                count[i]--;
-            }
+        for (int i : temp) {
+            nums[count[key(i, d)]-- - 1] = i;
         }
 
-        for (int i = 0; i < count[0]; i++) nums[i] = 0;
+    }
 
+    /**
+     * Gets the dth digit of num.
+     */
+    private static int key(int num, int d) {
+        for (int i = 0; num != 0 && i < d; i++) num /= 10;
+        return num % 10;
     }
 
 }
