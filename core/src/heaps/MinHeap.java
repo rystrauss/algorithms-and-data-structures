@@ -7,9 +7,9 @@ import java.util.ArrayList;
  *
  * @author Ryan Strauss
  */
-public class MinHeap implements Heap {
+public class MinHeap<T extends Comparable<T>> implements Heap<T> {
 
-    private ArrayList<Integer> nodes;
+    private ArrayList<T> nodes;
 
     public MinHeap() {
         nodes = new ArrayList<>();
@@ -52,22 +52,22 @@ public class MinHeap implements Heap {
      * @param pos2 Second position (no order implied).
      */
     private void swap(int pos1, int pos2) {
-        int temporary = nodes.get(pos1);
+        T temporary = nodes.get(pos1);
         nodes.set(pos1, nodes.get(pos2));
         nodes.set(pos2, temporary);
     }
 
     @Override
-    public void push(int value) {
+    public void push(T value) {
         nodes.add(value);
         siftUp();
     }
 
 
     @Override
-    public int pop() {
-        int removed = nodes.get(0);
-        int last = nodes.remove(nodes.size() - 1);
+    public T pop() {
+        T removed = nodes.get(0);
+        T last = nodes.remove(nodes.size() - 1);
         if (nodes.size() == 0)
             return removed;
         nodes.set(0, last);
@@ -76,13 +76,13 @@ public class MinHeap implements Heap {
     }
 
     @Override
-    public int peek() {
+    public T peek() {
         return nodes.get(0);
     }
 
     @Override
-    public int replace(int value) {
-        int removed = nodes.get(0);
+    public T replace(T value) {
+        T removed = nodes.get(0);
         nodes.set(0, value);
         siftDown();
         return removed;
@@ -95,10 +95,10 @@ public class MinHeap implements Heap {
         int i = 0;
         while (true) {
             int swap = i;
-            if (leftChild(i) < nodes.size() && nodes.get(leftChild(i)) < nodes.get(swap)) {
+            if (leftChild(i) < nodes.size() && nodes.get(leftChild(i)).compareTo(nodes.get(swap)) < 0) {
                 swap = leftChild(i);
             }
-            if (rightChild(i) < nodes.size() && nodes.get(rightChild(i)) < nodes.get(swap)) {
+            if (rightChild(i) < nodes.size() && nodes.get(rightChild(i)).compareTo(nodes.get(swap)) < 0) {
                 swap = rightChild(i);
             }
             if (swap == i) {
@@ -115,7 +115,7 @@ public class MinHeap implements Heap {
      */
     private void siftUp() {
         int i = nodes.size() - 1;
-        while (i > 0 && nodes.get(parent(i)) > nodes.get(i)) {
+        while (i > 0 && nodes.get(parent(i)).compareTo(nodes.get(i)) > 0) {
             swap(i, parent(i));
             i = parent(i);
         }
