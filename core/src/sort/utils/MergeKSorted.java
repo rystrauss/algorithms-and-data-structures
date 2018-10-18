@@ -4,7 +4,7 @@ import heaps.Heap;
 import heaps.MinHeap;
 
 /**
- *
+ * Supports the merging of an arbitrary number of already sorted arrays into a single sorted array.
  */
 public class MergeKSorted {
 
