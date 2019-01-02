@@ -36,7 +36,7 @@ public class MergeKSorted {
     public static int[] merge(int[][] lists) {
         int k = lists.length;
         int n = 0;
-        int[] indicies = new int[k];
+        int[] indices = new int[k];
         Heap<Node> pq = new MinHeap<>();
 
         for (int i = 0; i < k; i++) {
@@ -49,8 +49,8 @@ public class MergeKSorted {
 
         for (int i = 0; i < n; i++) {
             int j = pq.peek().list;
-            if (++indicies[j] < lists[j].length) {
-                Node next = new Node(lists[j][indicies[j]], j);
+            if (++indices[j] < lists[j].length) {
+                Node next = new Node(lists[j][indices[j]], j);
                 combined[i] = pq.replace(next).value;
             } else {
                 combined[i] = pq.pop().value;
