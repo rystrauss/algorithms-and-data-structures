@@ -1,7 +1,7 @@
 package string;
 
-import list.LinkedList;
-import list.List;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Class containing implementation of the Knuth-Morris-Pratt algorithm.
