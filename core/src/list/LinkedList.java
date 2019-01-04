@@ -1,17 +1,17 @@
-package lists;
+package list;
 
 /**
  * Implementation of a singly linked list of integers.
  *
  * @author Ryan Staruss
  */
-public class LinkedList implements List {
+public class LinkedList<T> implements List<T> {
 
     private class Node {
-        private int value;
+        private T value;
         private Node next;
 
-        private Node(int value) {
+        private Node(T value) {
             this.value = value;
             next = null;
         }
@@ -29,13 +29,9 @@ public class LinkedList implements List {
         size = 0;
     }
 
-    /**
-     * Adds the given integer to the end of the list.
-     *
-     * @param n the number to be added
-     */
-    public void add(int n) {
-        Node newNode = new Node(n);
+    @Override
+    public void add(T object) {
+        Node newNode = new Node(object);
         if (head == null) {
             head = newNode;
             tail = head;
@@ -46,21 +42,16 @@ public class LinkedList implements List {
         size++;
     }
 
-    /**
-     * Adds the given integer to the list at the given index.
-     *
-     * @param n the number to be added
-     * @param index the location at which to add n
-     */
-    public void add(int n, int index) {
+    @Override
+    public void add(T object, int index) {
         if (index < 0 | index > size) {
             throw new IndexOutOfBoundsException();
         }
         if (index == size) {
-            add(n);
+            add(object);
             return;
         }
-        Node newNode = new Node(n);
+        Node newNode = new Node(object);
         if (index == 0) {
             newNode.next = head;
             head = newNode;
@@ -77,15 +68,8 @@ public class LinkedList implements List {
         size++;
     }
 
-    /**
-     * Gets the element at the specified index.
-     *
-     * @param index the index of the desired element
-     * @return the element at index
-     * @throws IndexOutOfBoundsException if the index is out of range
-     */
     @Override
-    public int get(int index) throws IndexOutOfBoundsException {
+    public T get(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= size)
             throw new IndexOutOfBoundsException();
         Node pos = head;
@@ -95,15 +79,8 @@ public class LinkedList implements List {
         return pos.value;
     }
 
-    /**
-     * Removes the element at the specified index, and returns that element.
-     *
-     * @param index the index of the element to remove
-     * @return the removed element
-     * @throws IndexOutOfBoundsException if the index is out of range
-     */
     @Override
-    public int remove(int index) throws IndexOutOfBoundsException {
+    public T remove(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= size)
             throw new IndexOutOfBoundsException();
         Node pos = head;
@@ -116,46 +93,14 @@ public class LinkedList implements List {
         return temp.value;
     }
 
-    /**
-     * Gets the size of the list.
-     *
-     * @return the size of the list
-     */
     @Override
     public int size() {
         return size;
     }
 
-    /**
-     * Returns boolean value of whether or not the list is empty.
-     *
-     * @return true iff the list has at least one element.
-     */
     @Override
     public boolean isEmpty() {
         return size == 0;
-    }
-
-    /**
-     * Adds the given integer to a sorted list such that ascending order is maintained.
-     *
-     * @param n the number to be added
-     */
-    public void sortedInsert(int n) {
-        Node newNode = new Node(n);
-        if (head == null || head.value >= n) {
-            newNode.next = head;
-            head = newNode;
-        } else {
-            Node curr = head;
-            while (curr.next != null && curr.next.value < n) {
-                curr = curr.next;
-            }
-            Node temp = curr.next;
-            curr.next = newNode;
-            newNode.next = temp;
-        }
-        size++;
     }
 
     /**

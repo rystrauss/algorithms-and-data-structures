@@ -1,21 +1,21 @@
-package lists;
+package list;
 
-public interface List {
+public interface List<T> {
 
     /**
      * Adds the given integer to the end of the list.
      *
-     * @param n the number to be added
+     * @param object the object to be added
      */
-    public void add(int n);
+    public void add(T object);
 
     /**
      * Adds the given integer to the list at the given index.
      *
-     * @param n     the number to be added
+     * @param object the object to be added
      * @param index the location at which to add n
      */
-    public void add(int n, int index);
+    public void add(T object, int index);
 
     /**
      * Gets the element at the specified index.
@@ -24,7 +24,7 @@ public interface List {
      * @return the element at index
      * @throws IndexOutOfBoundsException if the index is out of range
      */
-    public int get(int index) throws IndexOutOfBoundsException;
+    public T get(int index) throws IndexOutOfBoundsException;
 
     /**
      * Removes the element at the specified index, and returns that element.
@@ -33,7 +33,7 @@ public interface List {
      * @return the removed element
      * @throws IndexOutOfBoundsException if the index is out of range
      */
-    public int remove(int index) throws IndexOutOfBoundsException;
+    public T remove(int index) throws IndexOutOfBoundsException;
 
     /**
      * Gets the size of the list.
