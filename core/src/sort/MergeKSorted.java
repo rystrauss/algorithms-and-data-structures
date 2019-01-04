@@ -1,7 +1,7 @@
-package utils;
+package sort;
 
-import heaps.Heap;
-import heaps.MinHeap;
+import heap.Heap;
+import heap.MinHeap;
 
 /**
  * Supports the merging of an arbitrary number of already sorted arrays into a single sorted array.

@@ -1,9 +1,14 @@
-package utils;
+package string;
 
-import java.util.LinkedList;
-import java.util.List;
+import list.LinkedList;
+import list.List;
 
-public class Strings {
+/**
+ * Class containing implementation of the Knuth-Morris-Pratt algorithm.
+ *
+ * @author Ryan Strauss
+ */
+public class KMP {
 
     /**
      * Determines whether one String is a cyclic rotation of another.
@@ -16,7 +21,7 @@ public class Strings {
      * @return true iff a and b are cyclic rotations of each other, false otherwise
      */
     public static boolean isCyclicRotation(String a, String b) {
-        return a.length() == b.length() && !KMPMatcher(a + a, b).isEmpty();
+        return a.length() == b.length() && !search(a + a, b).isEmpty();
     }
 
     /**
@@ -29,7 +34,7 @@ public class Strings {
      * @param pattern the substring that is trying to be matched to the target
      * @return a List of integers containing all indices in t where p is found
      */
-    public static List<Integer> KMPMatcher(String target, String pattern) {
+    public static List<Integer> search(String target, String pattern) {
         List<Integer> indices = new LinkedList<>();
         if (target.isEmpty() || pattern.isEmpty())
             return indices;

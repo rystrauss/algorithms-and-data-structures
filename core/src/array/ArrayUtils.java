@@ -1,4 +1,4 @@
-package utils;
+package array;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import sort.MergeSort;
  *
  * @author Ryan Strauss
  */
-public class Arrays {
+public class ArrayUtils {
 
     /**
      * Finds the maximum sum of a contiguous sub-array with Kadane's algorithm.

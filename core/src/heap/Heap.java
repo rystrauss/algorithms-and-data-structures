@@ -1,4 +1,4 @@
-package heaps;
+package heap;
 
 /**
  * Interface for a heap data structure.
