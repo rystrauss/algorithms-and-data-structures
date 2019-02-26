@@ -94,6 +94,21 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
+    public void reverse() {
+        Node prev = null;
+        Node next = null;
+        Node cur = head;
+        while (cur != null) {
+            next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        tail = head;
+        head = prev;
+    }
+
+    @Override
     public int size() {
         return size;
     }

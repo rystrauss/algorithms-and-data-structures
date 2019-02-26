@@ -36,6 +36,11 @@ public interface List<T> {
     public T remove(int index) throws IndexOutOfBoundsException;
 
     /**
+     * Reverses the list.
+     */
+    public void reverse();
+
+    /**
      * Gets the size of the list.
      *
      * @return the size of the list
