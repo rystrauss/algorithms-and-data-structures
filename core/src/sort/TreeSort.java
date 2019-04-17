@@ -1,6 +1,6 @@
 package sort;
 
-import trees.AVLTree;
+import tree.VanillaBinarySearchTree;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class TreeSort {
      * entries removed
      */
     public static List<Integer> sort(int[] nums) {
-        AVLTree tree = new AVLTree();
+        VanillaBinarySearchTree<Integer> tree = new VanillaBinarySearchTree<>();
         for (int i : nums) {
             tree.add(i);
         }

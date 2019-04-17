@@ -35,7 +35,7 @@ public class Knapsack {
                 }
             }
         }
-        
+
         List<Integer> indices = new LinkedList<>();
         indices.add(table[n][maxSize]);
         int i = n, j = maxSize;
