@@ -6,12 +6,16 @@ import java.util.ArrayList;
  * Implementation of a vanilla binary search tree.
  *
  * @param <E> the type of elements in the tree; must be comparable
+ * @author Ryan Strauss
  */
 public class BinarySearchTree<E extends Comparable<E>> {
 
-    private Node<E> root;
+    Node<E> root;
     private int size;
 
+    /**
+     * Constructs an empty tree.
+     */
     public BinarySearchTree() {
         this.root = null;
         this.size = 0;
@@ -222,6 +226,60 @@ public class BinarySearchTree<E extends Comparable<E>> {
             postOrder(elements, node.right);
             elements.add(node.data);
         }
+    }
+
+    /**
+     * Returns the minimum element of the tree.
+     *
+     * @return The minimum element of the tree, or null if the tree is empty.
+     */
+    public E minimumElement() {
+        if (this.root == null)
+            return null;
+
+        return minimumNode(root).data;
+    }
+
+    /**
+     * Returns the node with the minimum key in the (non-null) subtree
+     * rooted at currentRoot.
+     *
+     * @param currentRoot The root of the subtree that contains the minimum node.
+     * @return The node with the minimum key in the (non-null) subtree
+     * rooted at currentRoot.
+     */
+    Node<E> minimumNode(Node<E> currentRoot) {
+        if (currentRoot.left != null)
+            return minimumNode(currentRoot.left);
+
+        return currentRoot;
+    }
+
+    /**
+     * Returns the maximum element of the tree.
+     *
+     * @return The maximum element of the tree, or null if the tree is empty.
+     */
+    public E maximumElement() {
+        if (root == null)
+            return null;
+
+        return maximumNode(root).data;
+    }
+
+    /**
+     * Returns the node with the maximum key in the (non-null) subtree
+     * rooted at currentRoot.
+     *
+     * @param currentRoot The root of the subtree that contains the maximum node.
+     * @return The node with the maximum key in the (non-null) subtree
+     * rooted at currentRoot.
+     */
+    Node<E> maximumNode(Node<E> currentRoot) {
+        if (currentRoot.right != null)
+            return maximumNode(currentRoot.right);
+
+        return currentRoot;
     }
 
     /**

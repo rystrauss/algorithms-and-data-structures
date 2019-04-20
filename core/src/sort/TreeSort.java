@@ -1,5 +1,6 @@
 package sort;
 
+import tree.AVLTree;
 import tree.BinarySearchTree;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
  * Class containing implementation of binary tree sort.
  * <p>
  * The underlying AVL Tree excludes duplicate entries, so this class' sort method
- * removes duplicates during the sorting process.</p>
+ * removes duplicates during the sorting process.
  *
  * @author Ryan Strauss
  */
@@ -22,7 +23,7 @@ public class TreeSort {
      * entries removed
      */
     public static List<Integer> sort(int[] nums) {
-        BinarySearchTree<Integer> tree = new BinarySearchTree<>();
+        BinarySearchTree<Integer> tree = new AVLTree<>();
         for (int i : nums) {
             tree.add(i);
         }
