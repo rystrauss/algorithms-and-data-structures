@@ -5,6 +5,7 @@ import java.util.Iterator;
 /**
  * Implementation of a simple singly linked list.
  *
+ * @param <T> the type of the elements in the list
  * @author Ryan Strauss
  */
 public class LinkedList<T> implements List<T> {
@@ -64,9 +65,10 @@ public class LinkedList<T> implements List<T> {
         } else {
             Node curr = this.head;
             int location = 0;
-            while (curr.next != null && location++ < index - 1) {
+
+            while (curr.next != null && location++ < index - 1)
                 curr = curr.next;
-            }
+
             Node temp = curr.next;
             curr.next = newNode;
             newNode.next = temp;
@@ -78,10 +80,11 @@ public class LinkedList<T> implements List<T> {
     public T get(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size)
             throw new IndexOutOfBoundsException();
+
         Node pos = this.head;
-        for (int i = 0; i < index; i++) {
+        for (int i = 0; i < index; i++)
             pos = pos.next;
-        }
+
         return pos.value;
     }
 
