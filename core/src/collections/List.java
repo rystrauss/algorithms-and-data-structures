@@ -29,8 +29,9 @@ public interface List<E> extends Collection<E> {
      * @param index index at which to insert the first element from the specified collection
      * @param c     collection containing elements to be added to this list
      * @return true if this list changed as a result of the call
+     * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size())
      */
-    boolean addAll(int index, Collection<? extends E> c);
+    boolean addAll(int index, Collection<? extends E> c) throws IndexOutOfBoundsException;
 
     /**
      * Returns the element at the specified position in this list.

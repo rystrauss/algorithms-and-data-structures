@@ -91,7 +91,10 @@ public class ArrayList<E> implements List<E> {
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends E> c) {
+    public boolean addAll(int index, Collection<? extends E> c) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size)
+            throw new IndexOutOfBoundsException();
+
         while (this.data.length < this.size + c.size())
             grow();
 
