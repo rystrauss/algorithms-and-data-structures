@@ -79,7 +79,7 @@ public interface List<E> extends Collection<E> {
      *
      * @param index   index of the element to replace
      * @param element element to be stored at the specified position
-     * @return
+     * @return the element previously at the specified position
      * @throws IndexOutOfBoundsException if the index is out of range (index < 0 || index >= size())
      */
     E set(int index, E element) throws IndexOutOfBoundsException;
