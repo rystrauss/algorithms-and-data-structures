@@ -41,18 +41,21 @@ public class Trie {
 
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
-            if (!cur.children.containsKey(c))
-                cur.children.put(c, new Node(cur.sequence + c));
-            cur = cur.children.get(c);
+            Node child = cur.children.get(c);
+            if (child == null) {
+                child = new Node(cur.sequence + c);
+                cur.children.put(c, child);
+            }
+            cur = child;
         }
 
-        boolean didInsert = !cur.isEndOfWord;
-        cur.isEndOfWord = true;
-
-        if (didInsert)
+        if (!cur.isWord) {
+            cur.isWord = true;
             this.size++;
+            return true;
+        }
 
-        return didInsert;
+        return false;
     }
 
     /**
@@ -70,15 +73,12 @@ public class Trie {
 
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
-            if (!cur.children.containsKey(c))
-                return WordStatus.NOT_WORD;
             cur = cur.children.get(c);
+            if (cur == null)
+                return WordStatus.NOT_WORD;
         }
 
-        if (cur.isEndOfWord)
-            return WordStatus.WORD;
-
-        return cur.children.isEmpty() ? WordStatus.NOT_WORD : WordStatus.PREFIX;
+        return cur.isWord ? WordStatus.WORD : WordStatus.PREFIX;
     }
 
     /**
@@ -90,20 +90,16 @@ public class Trie {
         return this.size;
     }
 
-    private class Node {
+    private static class Node {
 
         String sequence;
-        boolean isEndOfWord;
+        boolean isWord;
         Map<Character, Node> children;
 
         Node(String sequence) {
             this.sequence = sequence;
-            this.isEndOfWord = false;
+            this.isWord = false;
             this.children = new HashMap<>();
-        }
-
-        boolean isLeaf() {
-            return this.children.isEmpty();
         }
 
     }
