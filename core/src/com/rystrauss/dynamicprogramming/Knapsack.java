@@ -1,4 +1,4 @@
-package com.rystrauss.dp;
+package com.rystrauss.dynamicprogramming;
 
 import java.util.LinkedList;
 import java.util.List;
