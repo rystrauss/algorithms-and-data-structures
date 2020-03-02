@@ -25,21 +25,6 @@ public interface Graph<V> extends Iterable<V> {
     Edge addEdge(V source, V target) throws IllegalArgumentException;
 
     /**
-     * Adds the provided edge in this graph, going from the source vertex to the target vertex, and returns
-     * the created edge.
-     * <p>
-     * If the graph already contains an edge from the specified source to the specified target, than this method
-     * does not change the graph.
-     *
-     * @param source the source vertex of the edge
-     * @param target the target vertex of the edge
-     * @param edge   edge to be added to this graph
-     * @return true iff this graph did not already contain the specified edge
-     * @throws IllegalArgumentException if source or target vertices are not found in the graph
-     */
-    boolean addEdge(V source, V target, Edge edge) throws IllegalArgumentException;
-
-    /**
      * Adds the specified vertex to this graph if not already present. If this graph already contains such vertex,
      * the call leaves this graph unchanged and returns false.
      *

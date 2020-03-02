@@ -1,5 +1,7 @@
 package com.rystrauss.graph;
 
+import java.util.Objects;
+
 /**
  * An edge is a connection between two vertices in a graph.
  * <p>
@@ -74,4 +76,17 @@ public class Edge implements Comparable<Edge> {
         return (this.weight < o.weight) ? -1 : 1;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(source, target, weight);
+    }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "source=" + source +
+                ", target=" + target +
+                ", weight=" + weight +
+                '}';
+    }
 }
