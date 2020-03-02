@@ -1,37 +1,35 @@
 package com.rystrauss.sort;
 
+import java.util.List;
+
 /**
  * Class containing implementation of heap sort.
  *
  * @author Ryan Strauss
  */
-public class HeapSort {
+public class HeapSorter<E extends Comparable<E>> extends Sorter<E> {
 
-    /**
-     * Performs an inplace heap sort on an array of integers.
-     *
-     * @param nums array to be sorted
-     */
-    public static void sort(int[] nums) {
-        heapify(nums);
-        int end = nums.length - 1;
+    @Override
+    public void sort(List<E> data) {
+        heapify(data);
+        int end = data.size() - 1;
         while (end > 0) {
-            swap(0, end, nums);
+            swap(0, end, data);
             end--;
-            siftDown(nums, 0, end);
+            siftDown(data, 0, end);
         }
     }
 
     /**
-     * Rearranges the elements of the given array to satisfy the max-heap property.
+     * Rearranges the elements of the given list to satisfy the max-heap property.
      *
-     * @param nums the array to be transformed.
+     * @param data the list to be transformed.
      */
-    private static void heapify(int[] nums) {
-        int end = nums.length - 1;
+    private void heapify(List<E> data) {
+        int end = data.size() - 1;
         int start = parent(end);
         while (start >= 0) {
-            siftDown(nums, start, end);
+            siftDown(data, start, end);
             start--;
         }
     }
@@ -39,24 +37,24 @@ public class HeapSort {
     /**
      * Performs a max-heap sift down operation.
      *
-     * @param nums  the array to perform the operation on; this array is assumed to be a max-heap
+     * @param data  the list to perform the operation on; this list is assumed to be a max-heap
      * @param start the index of the element to sift
      * @param end   the index of the end of the heap
      */
-    private static void siftDown(int[] nums, int start, int end) {
+    private void siftDown(List<E> data, int start, int end) {
         int root = start;
         while (true) {
             int swap = root;
-            if (leftChild(root) <= end && nums[swap] < nums[leftChild(root)]) {
+            if (leftChild(root) <= end && data.get(swap).compareTo(data.get(leftChild(root))) < 0) {
                 swap = leftChild(root);
             }
-            if (rightChild(root) <= end && nums[swap] < nums[rightChild(root)]) {
+            if (rightChild(root) <= end && data.get(swap).compareTo(data.get(rightChild(root))) < 0) {
                 swap = rightChild(root);
             }
             if (swap == root) {
                 return;
             }
-            swap(swap, root, nums);
+            swap(swap, root, data);
             root = swap;
         }
     }
@@ -89,19 +87,6 @@ public class HeapSort {
      */
     private static int rightChild(int i) {
         return 2 * i + 2;
-    }
-
-    /**
-     * Swap elements at positions pos1 and pos2.
-     *
-     * @param pos1 First position.
-     * @param pos2 Second position (no order implied).
-     * @param nums the array being operated on
-     */
-    private static void swap(int pos1, int pos2, int[] nums) {
-        int temporary = nums[pos1];
-        nums[pos1] = nums[pos2];
-        nums[pos2] = temporary;
     }
 
 }
