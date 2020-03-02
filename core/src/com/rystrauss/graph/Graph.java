@@ -1,5 +1,6 @@
 package com.rystrauss.graph;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -23,6 +24,18 @@ public interface Graph<V> extends Iterable<V> {
      * @throws IllegalArgumentException if source or target vertices are not found in the graph
      */
     Edge addEdge(V source, V target) throws IllegalArgumentException;
+
+    /**
+     * Creates a new weighted edge in this graph, going from the source vertex to the target vertex, and returns
+     * the created edge.
+     *
+     * @param source the source vertex of the edge
+     * @param target the target vertex of the edge
+     * @param weight the weight of the edge
+     * @return the newly created edge if added to the graph, otherwise null
+     * @throws IllegalArgumentException if source or target vertices are not found in the graph
+     */
+    Edge addEdge(V source, V target, double weight) throws IllegalArgumentException;
 
     /**
      * Adds the specified vertex to this graph if not already present. If this graph already contains such vertex,
@@ -77,5 +90,26 @@ public interface Graph<V> extends Iterable<V> {
      * @return a set of the edges contained in this graph
      */
     Set<Edge> edgeSet();
+
+    /**
+     * Returns the number of vertices in the graph.
+     *
+     * @return the number of vertices in the graph
+     */
+    int size();
+
+    /**
+     * Djikstra's algorithm for finding the shortest paths between vertices in the graph.
+     * <p>
+     * The algorithm is provided with a source vertex, from which the distance to all other vertices will be computed.
+     * <p>
+     * This implementation uses a priority queue.
+     *
+     * @param source the vertex from which the distance to all other vertices will be computed
+     * @return a map of type {@code Map<V, Double>} where the keys are vertices and the values are the
+     * distances to the associated vertex
+     * @throws IllegalArgumentException if source vertex is not found in the graph
+     */
+    Map<V, Double> shortestPaths(V source) throws IllegalArgumentException;
 
 }

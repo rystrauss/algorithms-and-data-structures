@@ -1,7 +1,5 @@
 package com.rystrauss.graph;
 
-import java.util.Objects;
-
 /**
  * An edge is a connection between two vertices in a graph.
  * <p>
@@ -20,10 +18,23 @@ public class Edge implements Comparable<Edge> {
     private Object source, target;
     private double weight;
 
+    /**
+     * Constructs an edge with a weight of {@code DEFAULT_EDGE_WEIGHT}.
+     *
+     * @param source the source vertex of the edge
+     * @param target the target vertex of the edge
+     */
     public Edge(Object source, Object target) {
         this(source, target, DEFAULT_EDGE_WEIGHT);
     }
 
+    /**
+     * Constructs an edge with a specified weight.
+     *
+     * @param source the source vertex of the edge
+     * @param target the target vertex of the edge
+     * @param weight the weight of the edge
+     */
     public Edge(Object source, Object target, double weight) {
         this.source = source;
         this.target = target;
@@ -58,14 +69,26 @@ public class Edge implements Comparable<Edge> {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Edge) {
-            Edge other = (Edge) obj;
-            return this.source.equals(other.source)
-                    && this.target.equals(other.target)
-                    && this.weight == other.weight;
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Edge edge = (Edge) o;
+
+        if (Double.compare(edge.weight, weight) != 0) return false;
+        if (!source.equals(edge.source)) return false;
+        return target.equals(edge.target);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = source.hashCode();
+        result = 31 * result + target.hashCode();
+        temp = Double.doubleToLongBits(weight);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 
     @Override
@@ -74,11 +97,6 @@ public class Edge implements Comparable<Edge> {
             return 0;
 
         return (this.weight < o.weight) ? -1 : 1;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(source, target, weight);
     }
 
     @Override

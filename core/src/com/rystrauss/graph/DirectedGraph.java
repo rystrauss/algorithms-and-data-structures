@@ -17,12 +17,17 @@ public class DirectedGraph<V> extends AbstractGraph<V> {
 
     @Override
     public Edge addEdge(V source, V target) throws IllegalArgumentException {
+        return addEdge(source, target, Edge.DEFAULT_EDGE_WEIGHT);
+    }
+
+    @Override
+    public Edge addEdge(V source, V target, double weight) throws IllegalArgumentException {
         if (!(incoming.containsKey(source) && incoming.containsKey(target))) {
             throw new IllegalArgumentException("Both the source and target vertices must exist in the graph " +
                     "in order to add an edge between them.");
         }
 
-        Edge edge = new Edge(source, target);
+        Edge edge = new Edge(source, target, weight);
 
         incoming.get(target).add(edge);
         outgoing.get(source).add(edge);

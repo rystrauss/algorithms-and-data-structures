@@ -77,4 +77,87 @@ public abstract class AbstractGraph<V> implements Graph<V> {
         return incoming.keySet().iterator();
     }
 
+    @Override
+    public int size() {
+        return incoming.size();
+    }
+
+    @Override
+    public Map<V, Double> shortestPaths(V source) throws IllegalArgumentException {
+        if (!incoming.containsKey(source))
+            throw new IllegalArgumentException("The source vertex must exist in the graph.");
+
+        Map<V, Double> dist = new HashMap<>();
+        PriorityQueue<LabeledVertex> q = new PriorityQueue<>();
+
+        dist.put(source, 0.0);
+
+        for (V v : this) {
+            if (v != source)
+                dist.put(v, Double.MAX_VALUE);
+
+            q.add(new LabeledVertex(v, dist.get(v)));
+        }
+
+        while (!q.isEmpty()) {
+            LabeledVertex u = q.poll();
+            Set<Edge> neighbors = outgoing.get(u.data);
+            if (neighbors == null)
+                continue;
+
+            for (Edge e : neighbors) {
+                V v = (V) e.getTarget();
+                double alt = dist.get(u.data) + e.getWeight();
+                if (alt < dist.get(v)) {
+                    dist.put(v, alt);
+                    LabeledVertex updatedVertex = new LabeledVertex(v, alt);
+                    q.remove(updatedVertex);
+                    q.add(updatedVertex);
+                }
+            }
+        }
+
+        return dist;
+    }
+
+    private final class LabeledVertex implements Comparable<LabeledVertex> {
+
+        V data;
+        double distance;
+
+        LabeledVertex(V data, double distance) {
+            this.data = data;
+            this.distance = distance;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            LabeledVertex that = (LabeledVertex) o;
+
+            return data.equals(that.data);
+        }
+
+        @Override
+        public int hashCode() {
+            int result;
+            long temp;
+            result = data.hashCode();
+            temp = Double.doubleToLongBits(distance);
+            result = 31 * result + (int) (temp ^ (temp >>> 32));
+            return result;
+        }
+
+        @Override
+        public int compareTo(LabeledVertex o) {
+            if (this.distance == o.distance)
+                return 0;
+
+            return (this.distance - o.distance < 0) ? -1 : 1;
+        }
+
+    }
+
 }
