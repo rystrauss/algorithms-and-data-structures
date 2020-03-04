@@ -17,22 +17,6 @@ public abstract class Sorter<E extends Comparable<E>> {
     public abstract void sort(List<E> data);
 
     /**
-     * Determines whether or not a list is sorted.
-     *
-     * @param data the list of data to be verified
-     * @param <E>  the type of elements in the list
-     * @return true iff the list is monotonically ordered
-     */
-    public static <E extends Comparable<E>> boolean isSorted(List<E> data) {
-        E prev = data.get(0);
-        for (E e : data) {
-            if (e.compareTo(prev) < 0)
-                return false;
-        }
-        return true;
-    }
-
-    /**
      * Swap elements at positions pos1 and pos2.
      *
      * @param pos1 First position.
